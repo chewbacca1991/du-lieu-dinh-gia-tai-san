@@ -19,7 +19,10 @@ class Property(db.Model):
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
-    predicted_price = 100000  # Placeholder for prediction logic
+    area = data.get('area')
+    rooms = data.get('rooms')
+    # Simple prediction based on the area and number of rooms
+    predicted_price = (area * 1000) + (rooms * 5000)
     return jsonify({'predicted_price': predicted_price})
 
 if __name__ == '__main__':
