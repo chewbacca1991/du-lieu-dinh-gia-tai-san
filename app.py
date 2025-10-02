@@ -18,16 +18,19 @@ class Property(db.Model):
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.get_json()
-    area = data.get('area')
-    rooms = data.get('rooms')
+    try:
+        data = request.get_json()
+        area = data.get('area')
+        rooms = data.get('rooms')
 
-    if area is None or rooms is None:
-        return jsonify({'error': 'Both area and rooms fields are required.'}), 400
+        if area is None or rooms is None:
+            return jsonify({'error': 'Both area and rooms fields are required.'}), 400
 
-    # Simple prediction based on the area and number of rooms
-    predicted_price = (area * 1000) + (rooms * 5000)
-    return jsonify({'predicted_price': predicted_price})
+        # Simple prediction based on the area and number of rooms
+        predicted_price = (area * 1000) + (rooms * 5000)
+        return jsonify({'predicted_price': predicted_price})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     db.create_all()
