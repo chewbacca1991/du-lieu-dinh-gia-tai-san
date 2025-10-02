@@ -21,9 +21,10 @@ def predict():
     data = request.get_json()
     area = data.get('area')
     rooms = data.get('rooms')
+    date_sold = data.get('date_sold')
 
-    if area is None or rooms is None:
-        return jsonify({'error': 'Area and rooms are required fields.'}), 400
+    if area is None or rooms is None or date_sold is None:
+        return jsonify({'error': 'Area, rooms, and date_sold are required fields.'}), 400
 
     # Simple prediction based on the area and number of rooms
     predicted_price = (area * 1000) + (rooms * 5000)
